@@ -24,7 +24,7 @@ class MainPage extends React.PureComponent {
   componentDidMount() {
     this.props.dispatch(initViewportListeners());
     // TODO Handle specifying canvas size + resizing here, copy from beatthetraffic
-    this.props.dispatch(loadUserSettings());
+    // this.props.dispatch(loadUserSettings());
     // TODO See how we handle the YOLO on / off situation
     this.props.dispatch(startListeningToServerData());
     // Make config available on window global

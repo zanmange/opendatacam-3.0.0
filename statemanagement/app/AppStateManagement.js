@@ -6,6 +6,7 @@ import { updateTrackerData } from './TrackerStateManagement';
 import { updateCounterSummary, updateTrackerSummary, resetCountingAreas } from './CounterStateManagement';
 import { fetchHistory } from './HistoryStateManagement';
 import { setOriginalResolution } from './ViewportStateManagement';
+import CONFIG from '../../config.json';
 
 // Initial state
 const initialState = fromJS({
@@ -15,20 +16,22 @@ const initialState = fromJS({
     currentFPS: 0
   },
   yoloStatus: {
-    isStarted: false,
-    isStarting: true
+    isStarted: true,
+    isStarting: false
   },
   uiSettings: {
     counterEnabled: true,
     pathfinderEnabled: true,
     heatmapEnabled: false
   },
-  isListeningToYOLO: false,
+  isListeningToYOLO: true,
   mode: MODE.LIVEVIEW,
   showMenu: false,
+
   isListeningToServerData: false,
   eventSourceServerData: null,
-  config: {}
+  config: CONFIG,
+  currentFrame: "001"
 })
 
 // Actions
@@ -205,24 +208,36 @@ export function setURLData(req) {
 
 export function startListeningToServerData() {
   return (dispatch, getState) => {
-    const eventSource = new EventSource("/tracker/sse");
-    dispatch({
-        type: START_LISTENING_SERVERDATA,
-        payload: eventSource
-    })
+
+
+    // TODO here, do something like startYOLOSimulation
+    // Instanciate Opendatacam.js
+    // ON each tick, change frame so <Webcam> updates + process detections of this frame with updateTrackerData, updateAppStat, updateCounterSummary ...
+
+    // If not performance enough, drive it from <Webcam> either with Video or frame by frame jpg
+
+
+    
+    // const eventSource = new EventSource("/tracker/sse");
+    // dispatch({
+    //     type: START_LISTENING_SERVERDATA,
+    //     payload: eventSource
+    // })
+
+    
 
     // On new tracker data coming from server, update redux store
-    eventSource.onmessage = (msg) => {
-      // Parse JSON
-      let message = JSON.parse(msg.data);
-      if(message.videoResolution) {
-        dispatch(setOriginalResolution(message.videoResolution))
-      }
-      dispatch(updateTrackerData(message.trackerDataForLastFrame))
-      dispatch(updateAppState(message.appState))
-      dispatch(updateCounterSummary(message.counterSummary))
-      dispatch(updateTrackerSummary(message.trackerSummary))
-    }
+    // eventSource.onmessage = (msg) => {
+    //   // Parse JSON
+    //   let message = JSON.parse(msg.data);
+    //   if(message.videoResolution) {
+    //     dispatch(setOriginalResolution(message.videoResolution))
+    //   }
+    //   dispatch(updateTrackerData(message.trackerDataForLastFrame))
+    //   dispatch(updateAppState(message.appState))
+    //   dispatch(updateCounterSummary(message.counterSummary))
+    //   dispatch(updateTrackerSummary(message.trackerSummary))
+    // }
   }
 }
 

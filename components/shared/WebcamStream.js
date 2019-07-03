@@ -24,7 +24,7 @@ class WebcamStream extends PureComponent {
         <img
            width={this.props.resolution.get('w')}
            height={this.props.resolution.get('h')}
-           src="/webcam/stream"
+           src={`/static/placeholder/frames/${this.props.currentFrame}.jpg`}
          />
         <style jsx>{`
           {/* @media (min-aspect-ratio: 16/9) {
@@ -53,6 +53,7 @@ class WebcamStream extends PureComponent {
 
 export default connect((state) => {
   return {
-    resolution: state.viewport.get('canvasResolution')
+    resolution: state.viewport.get('canvasResolution'),
+    currentFrame: state.app.get('currentFrame')
   }
 })(WebcamStream)

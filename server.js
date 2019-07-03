@@ -24,42 +24,42 @@ const app = next({ dev })
 const handle = app.getRequestHandler()
 
 // Log config loaded
-if(SIMULATION_MODE) {
-  console.log('-----------------------------------')
-  console.log('-     Opendatacam initialized     -')
-  console.log('- IN SIMULATION MODE              -')
-  console.log('-----------------------------------')
-} else {
-  console.log('-----------------------------------')
-  console.log('-     Opendatacam initialized     -')
-  console.log('- Config loaded:                  -')
-  console.log(JSON.stringify(config, null, 2));
-  console.log('-----------------------------------')
-}
+// if(SIMULATION_MODE) {
+//   console.log('-----------------------------------')
+//   console.log('-     Opendatacam initialized     -')
+//   console.log('- IN SIMULATION MODE              -')
+//   console.log('-----------------------------------')
+// } else {
+//   console.log('-----------------------------------')
+//   console.log('-     Opendatacam initialized     -')
+//   console.log('- Config loaded:                  -')
+//   console.log(JSON.stringify(config, null, 2));
+//   console.log('-----------------------------------')
+// }
 
 // Init processes
-YOLO.init(SIMULATION_MODE);
+// YOLO.init(SIMULATION_MODE);
 
 // Init connection to db
-DBManager.init().then(
-  () => {
-    console.log('Success init db')
-  },
-  err => {
-    console.error(err)
-  }
-)
+// DBManager.init().then(
+//   () => {
+//     console.log('Success init db')
+//   },
+//   err => {
+//     console.error(err)
+//   }
+// )
 
-// TODO Move the stdout code into it's own module
-var videoResolution = null;
+// // TODO Move the stdout code into it's own module
+// var videoResolution = null;
 
-if(SIMULATION_MODE) {
-  videoResolution = {
-    w: 1280,
-    h: 720
-  }
-  Opendatacam.setVideoResolution(videoResolution)
-}
+// if(SIMULATION_MODE) {
+//   videoResolution = {
+//     w: 1280,
+//     h: 720
+//   }
+//   Opendatacam.setVideoResolution(videoResolution)
+// }
 
 var stdoutBuffer = "";
 var stdoutInterval = "";
@@ -98,10 +98,10 @@ app.prepare()
   // This render pages/index.js for a request to /
   express.get('/', (req, res) => {
 
-    YOLO.start(); // Inside yolo process will check is started
+    // YOLO.start(); // Inside yolo process will check is started
 
-    const urlData = getURLData(req);
-    Opendatacam.listenToYOLO(urlData);
+    // const urlData = getURLData(req);
+    // Opendatacam.listenToYOLO(urlData);
     return app.render(req, res, '/')
   })
 

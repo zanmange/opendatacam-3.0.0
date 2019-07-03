@@ -1,3 +1,5 @@
+import CONFIG from '../config.json';
+
 // TODO memoize this for performance
 export function evaluateCSSVariable(color) {
   return window.getComputedStyle(document.body).getPropertyValue(color.match(/\((.*?)\)/)[1]);
@@ -7,7 +9,7 @@ export function getCounterColor(colorLabel) {
   
   let color = null;
 
-  color = window.CONFIG.COUNTER_COLORS[colorLabel];
+  color = CONFIG.COUNTER_COLORS[colorLabel];
 
   if(color) {
     return color;
@@ -18,17 +20,17 @@ export function getCounterColor(colorLabel) {
 }
 
 export function getAvailableCounterColors() {
-  return Object.keys(window.CONFIG.COUNTER_COLORS);
+  return Object.keys(CONFIG.COUNTER_COLORS);
 }
 
 export function getDefaultCounterColor() {
-  return Object.keys(window.CONFIG.COUNTER_COLORS[getAvailableCounterColors()[0]]);
+  return Object.keys(CONFIG.COUNTER_COLORS[getAvailableCounterColors()[0]]);
 }
 
 export function getPathfinderColors() {
-  return window.CONFIG.PATHFINDER_COLORS;
+  return CONFIG.PATHFINDER_COLORS;
 }
 
 export function getDisplayClasses() {
-  return window.CONFIG.DISPLAY_CLASSES;
+  return CONFIG.DISPLAY_CLASSES;
 }

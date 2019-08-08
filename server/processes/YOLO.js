@@ -1,6 +1,6 @@
 const forever = require('forever-monitor');
 const config = require('../../config.json');
-const simulation30FPSDetectionsData = require('../../static/placeholder/alexeydetections30FPS.json');
+const simulation30FPSDetectionsData = require('../../static/placeholder/tokyo.json');
 const fs = require('fs');
 const path = require('path');
 const http = require('http');
@@ -106,7 +106,7 @@ module.exports = {
      *     - Simulate a MJPEG stream on port 8090
      *     - Update opendatacam tracker on each frame
      */
-    var frameNb = 16;
+    var frameNb = 1;
     var mjpegReqHandler = null;
     var timer = null;
     var dataThisFrame = [];
@@ -140,10 +140,10 @@ module.exports = {
         } else {
           console.log("JSONStream connexion not opened yet");
         }
-      }, 34);
+      }, 50);
 
       function updateJPG() {
-        fs.readFile(path.join(__dirname, '../../static/placeholder/frames') + "/" + String(frameNb).padStart(3, '0') + '.jpg', sendJPGData);
+        fs.readFile(path.join(__dirname, '../../static/placeholder/frames') + "/" + String(frameNb).padStart(4, '0') + '.jpg', sendJPGData);
         frameNb++;
       }
 
@@ -157,7 +157,7 @@ module.exports = {
       }
 
       function checkIfFinished() {
-        if (frameNb > 451) {
+        if (frameNb > 1459) {
           // clearInterval(timer);
           // mjpegReqHandler.close();
           console.log('Reset stream');
